@@ -74,3 +74,63 @@ Environment: GitHub Codespaces
 Simulation Engine: LocalStack (Docker)
 
 Tooling: AWS CLI v2, Terraform v1.x
+
+---
+
+## 🔧 Starting LocalStack (Docker)
+
+**Prerequisites:** Docker installed and running on your machine.
+
+**Quick start (single container):**
+
+```bash
+# Run LocalStack with EC2 and IAM services enabled on the edge port 4566
+docker run --rm -it -p 4566:4566 -p 4571:4571 \
+  -e SERVICES=ec2,iam \
+  -e DEFAULT_REGION=us-east-1 \
+  localstack/localstack:latest
+```
+
+- For background mode, add `-d` (detached): `docker run -d ...`
+- Adjust `SERVICES` to suit what you need (e.g., `s3,ec2,iam`).
+
+**Using Docker Compose (recommended for repeatable setups):**
+
+Create a `docker-compose.yml` in the project root:
+
+```yaml
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=ec2,iam
+      - DEFAULT_REGION=us-east-1
+      - DEBUG=1
+    volumes:
+      - ./localstack:/var/lib/localstack
+```
+
+Start with:
+
+```bash
+docker-compose up -d
+```
+
+**Verify LocalStack is running:**
+
+```bash
+# Check the container
+docker ps
+
+# Or run an AWS CLI command against the LocalStack endpoint
+aws --endpoint-url=http://localhost:4566 ec2 describe-instances
+```
+
+**Troubleshooting tips:**
+- If the port 4566 is already in use, stop the conflicting service or change the port mapping.
+- If a service is missing, include it in `SERVICES` (e.g., `SERVICES=ec2,s3`).
+- Use `DEBUG=1` for more verbose logs.
+
