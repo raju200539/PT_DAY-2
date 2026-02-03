@@ -32,24 +32,28 @@ aws --endpoint-url=http://localhost:4566 ec2 run-instances \
     --image-id ami-df5de72ade6b \
     --instance-type t2.micro \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Manual-Instance}]'
+```
+
 Proof of Execution:
 
-`![Manual Proof](manual.png)`
+![Manual Proof](manual.png)
 
-🚀 Part 2: Terraform Launch (Automated)
-For the automated launch, I defined the infrastructure declaratively using a main.tf file. This ensures the infrastructure is reproducible.
+## 🚀 Part 2: Terraform Launch (Automated)
+
+For the automated launch, I defined the infrastructure declaratively using a `main.tf` file. This ensures the infrastructure is reproducible.
 
 Configuration (main.tf): The provider was configured to point to the LocalStack endpoint (http://localhost:4566) instead of the default AWS public API.
 
 Commands Executed:
 
-terraform init - To initialize the working directory.
-
-terraform apply -auto-approve - To create the resources.
+```bash
+terraform init                  # Initialize the working directory
+terraform apply -auto-approve   # Create the resources
+```
 
 Proof of Execution:
 
-`![Manual Proof](terraform.png)`
+![Terraform Proof](terraform.png)
 
 
 💻 Technical Setup
