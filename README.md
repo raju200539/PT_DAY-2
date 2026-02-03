@@ -1,14 +1,22 @@
 # AWS EC2 & Terraform Assignment
 
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Environment Note](#environment-note-localstack-implementation)
+- [Core Concepts](#core-concepts)
+- [Manual Launch (AWS CLI)](#-part-1-manual-launch-aws-cli)
+- [Terraform Launch (Automated)](#-part-2-terraform-launch-automated)
+- [Technical Setup](#-technical-setup)
+
 ## 📋 Project Overview
-This repository documents the process of provisioning AWS EC2 instances using two distinct methods:
-1.  **Manual Provisioning:** Using the AWS Command Line Interface (CLI).
-2.  **Infrastructure as Code (IaC):** Using Terraform automation.
+This repository shows how to provision AWS EC2 instances using two methods:
+1. **Manual Provisioning:** AWS CLI
+2. **Infrastructure as Code (IaC):** Terraform
 
 ### ⚠️ Environment Note: LocalStack Implementation
-As I do not currently possess an active AWS account, I have completed this assignment using **LocalStack**.
+I do not have an AWS account, so this assignment uses **LocalStack** to simulate AWS locally.
 
-LocalStack is a cloud service emulator that runs in a Docker container. It simulates the AWS environment locally, allowing for the execution of valid AWS CLI commands and Terraform scripts without requiring a live cloud connection or credit card. This approach demonstrates the exact same logic and syntax required for real AWS environments.
+LocalStack is a cloud service emulator that runs in a Docker container. It simulates the AWS environment locally, allowing execution of AWS CLI commands and Terraform scripts without requiring a live cloud connection or credit card. This approach demonstrates the same logic and syntax required for real AWS environments.
 
 ---
 
@@ -36,13 +44,15 @@ aws --endpoint-url=http://localhost:4566 ec2 run-instances \
 
 Proof of Execution:
 
-![Manual Proof](manual.png)
+<img src="manual.png" alt="Manual Proof" width="480px">
+
+*Figure: Manual launch proof — EC2 instance created with AWS CLI against LocalStack.*
 
 ## 🚀 Part 2: Terraform Launch (Automated)
 
 For the automated launch, I defined the infrastructure declaratively using a `main.tf` file. This ensures the infrastructure is reproducible.
 
-Configuration (main.tf): The provider was configured to point to the LocalStack endpoint (http://localhost:4566) instead of the default AWS public API.
+Configuration (main.tf): The provider is configured to point to the LocalStack endpoint (http://localhost:4566) instead of the default AWS public API.
 
 Commands Executed:
 
@@ -53,12 +63,14 @@ terraform apply -auto-approve   # Create the resources
 
 Proof of Execution:
 
-![Terraform Proof](terraform.png)
+<img src="terraform.png" alt="Terraform Proof" width="480px">
+
+*Figure: Terraform launch proof — EC2 instance created via Terraform against LocalStack.*
 
 
 💻 Technical Setup
-Environment: GitHub Codespaces (Cloud-based VS Code)
+Environment: GitHub Codespaces
 
-Simulation Engine: LocalStack (via Docker)
+Simulation Engine: LocalStack (Docker)
 
 Tooling: AWS CLI v2, Terraform v1.x
